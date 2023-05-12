@@ -201,10 +201,37 @@ def process_profile(idx, profile_id):
         perform_transaction(driver, 'Avalanche Network C-Chain', '#Avalanche', initial_window_handle)
         perform_transaction(driver, 'BNB Smart Chain (previously Binance Smart Chain Mainnet)', '#BNB\\ Chain',
                             initial_window_handle)
+        mint_options = [
+            ('Polygon Mainnet',),
+            ('Avalanche Network C-Chain',),
+            ('BNB Smart Chain (previously Binance Smart Chain Mainnet)',)
+        ]
+        chosen_option = random.choice(mint_options)
+        driver.get(metamask_url)
+        click_if_exists(driver, '/html/body/div[1]/div/div[1]/div/div[2]/div/div')
+        time.sleep(random.uniform(1.2, 1.3))
+        click_if_exists(driver, f"//*[contains(text(), '{chosen_option}')]")
+        driver.get(holograph_url)
+        click_if_exists(driver, '/html/body/div/main/header/nav/div/div[3]/div/div[2]/div[1]/div')
+        time.sleep(random.uniform(0.7, 1.3))
+        click_if_exists(driver, '/html/body/div/main/header/nav/div/div[3]/div/div[2]/div[2]/div/button')
+        time.sleep(random.uniform(0.7, 1.3))
+        click_if_exists(driver, '/html/body/div/main/main/section/div[1]/div[3]/button[1]')
+        time.sleep(random.uniform(0.7, 1.3))
+        click_if_exists(driver, '/html/body/div/main/main/section/div/div[2]/button')
+        time.sleep(random.uniform(3.7, 4.3))
+        click_if_exists(driver, '/html/body/div/main/main/section/div/div[2]/button')
+        time.sleep(random.uniform(3.7, 4.3))
+        confirm_transaction(driver)
+        try:
+            element = WebDriverWait(driver, 300).until(
+                EC.presence_of_element_located((By.XPATH, '/html/body/div/main/div[3]/div/div/button[1]')))
+        except TimeoutException:
+            print("Timed out waiting for element to appear.")
         driver.close()
         print(f"Done for profile №{idx}!")
     except Exception as e:
-        print(f"Fail for profile №{idx} erorr - {e}!")
+        print(f"Fail for profile №{idx}...{e}!")
         driver.quit()
 
 task_queue = Queue(max_simultaneous_profiles)
