@@ -202,9 +202,9 @@ def process_profile(idx, profile_id):
         perform_transaction(driver, 'BNB Smart Chain (previously Binance Smart Chain Mainnet)', '#BNB\\ Chain',
                             initial_window_handle)
         mint_options = [
-            ('Polygon Mainnet',),
-            ('Avalanche Network C-Chain',),
-            ('BNB Smart Chain (previously Binance Smart Chain Mainnet)',)
+            ('Polygon Mainnet'),
+            ('Avalanche Network C-Chain'),
+            ('BNB Smart Chain (previously Binance Smart Chain Mainnet)')
         ]
         chosen_option = random.choice(mint_options)
         driver.get(metamask_url)
@@ -221,8 +221,9 @@ def process_profile(idx, profile_id):
         click_if_exists(driver, '/html/body/div/main/main/section/div/div[2]/button')
         time.sleep(random.uniform(3.7, 4.3))
         click_if_exists(driver, '/html/body/div/main/main/section/div/div[2]/button')
-        time.sleep(random.uniform(3.7, 4.3))
+        time.sleep(random.uniform(5, 7))
         confirm_transaction(driver)
+        driver.switch_to.window(initial_window_handle)
         try:
             element = WebDriverWait(driver, 300).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div/main/div[3]/div/div/button[1]')))
